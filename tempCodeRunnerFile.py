@@ -1,8 +1,3 @@
-import pyaudio
-import numpy as np
-
-import soundfile as sf
-
 
 # define parameters for recording
 sampling_rate = 44100
@@ -56,7 +51,7 @@ if choice==2:
         health_condition = value_chart[4]
 
     # display the current health condition
-    print('Current health condition:', health_condition)
+    print('Current health condition: ', health_condition)
 
     # close the audio stream and terminate PyAudio
     stream.stop_stream()
@@ -64,7 +59,7 @@ if choice==2:
     p.terminate()
 
 else:
-    audio_data, samplerate = sf.read(r'bad.wav') 
+    audio_data, samplerate = sf.read('bad.wav') 
 
      # convert the audio data to a numpy array
     audio_data = np.concatenate(audio_data)
