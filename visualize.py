@@ -36,11 +36,12 @@ if choice==2:
 
     # define the value chart mapping sound levels to health conditions
     value_chart = {
-        0: 'Healthy,Nothing needs to be done right away. However, regular inspections should continue to guarantee that any potential problems are found quickly.',
-        1: 'Slight issue',
-        2: 'Moderate issue',
-        3: 'Serious issue',
-        4: 'Critical issue'
+         0: 'Healthy,Nothing needs to be done right away. However, regular inspections should continue to guarantee that any potential problems are found quickly.',
+        1: 'Slight issue,Before the issue gets worse, remedial action should be taken. This could entail doing maintenance, changing operating parameters, or replacing or repairing components.',
+        2: 'Moderate issue,Potentially urgent action is required. It can be necessary to shut down the equipment or component for maintenance, and it might also need to be replaced.',
+        3: 'Serious issue, immediate action is necessary to prevent catastrophic failure. The machine or component may need to be shut down immediately, and emergency repairs or replacement may be required.',
+        4: 'Critical issue,immediate action is necessary to prevent catastrophic failure. The machine or component may need to be shut down immediately, and emergency repairs or replacement may be required.'
+
     }
 
     # map the sound level to a health condition using the value chart
