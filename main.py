@@ -1,12 +1,41 @@
 import pyaudio
 import numpy as np
 import soundfile as sf
+from tkinter import messagebox
 from tkinter import *
+from tkinter import filedialog
+import librosa
+import matplotlib.pyplot as plt
 
 # define parameters for recording
 sampling_rate = 44100
 chunk_size = 1024
 
+def comp(old):
+    file_types = (("WAV files", "*.wav"), ("All files","*.*"))
+    messagebox.showinfo("Open file","Please select the first audio file.")
+    file_path1 = filedialog.askopenfilename(filetypes=file_types)
+    messagebox.showinfo("Open file","Please select the second audio file.")
+    file_path2 = filedialog.askopenfilename(filetypes=file_types)
+
+    y, sr = librosa.load(file_path1)
+    z, sr = librosa.load(file_path2)
+
+    # Create a time axis in seconds
+    ty = librosa.times_like(y, sr=sr)
+    tz = librosa.times_like(z, sr=sr)
+    zre = np.interp(ty, tz, z)
+
+    # Plot the waveform
+    plt.figure(figsize=(12, 4))
+    plt.plot(ty, y, alpha=0.8, color="red", label="File 1")
+    plt.plot(ty, zre, alpha=0.8, color="blue", label="File 2")
+    plt.xlabel('Time (s)')
+    plt.ylabel('Amplitude')
+    plt.title('Waveform')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
 
 def rec(old):
     old.destroy()
@@ -62,10 +91,26 @@ def rec(old):
     stream.stop_stream()
     stream.close()
     p.terminate()
+    # y, sr = librosa.load("bad.wav")
+
+    # # Create a time axis in seconds
+    # t = librosa.times_like(y, sr=sr)
+
+    # # Plot the waveform
+    # plt.figure(figsize=(12, 4))
+    # plt.plot(t, y, alpha=0.8)
+    # plt.xlabel('Time (s)')
+    # plt.ylabel('Amplitude')
+    # plt.title('Waveform')
+    # plt.grid(True)
+    # plt.tight_layout()
+    # plt.show()
 
 def prerec(old):
+    file_types = (("WAV files", "*.wav"), ("All files","*.*"))
+    file_path = filedialog.askopenfilename(filetypes=file_types)
     old.destroy()
-    audio_data, samplerate = sf.read('bad.wav') 
+    audio_data, samplerate = sf.read(file_path) 
 
      # convert the audio data to a numpy array
     audio_data = np.concatenate(audio_data)
@@ -96,8 +141,22 @@ def prerec(old):
 
     # display the current health condition
     print('Current health condition:', health_condition)
+    y, sr = librosa.load(file_path)
 
-def show_custom_message_box():
+    # Create a time axis in seconds
+    t = librosa.times_like(y, sr=sr)
+
+    # Plot the waveform
+    plt.figure(figsize=(12, 4))
+    plt.plot(t, y, alpha=0.8)
+    plt.xlabel('Time (s)')
+    plt.ylabel('Amplitude')
+    plt.title('Waveform')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+def main():
     # Create a new window for the message box
     message_box = Tk()
     message_box.geometry("480x120+720+480")
@@ -113,11 +172,10 @@ def show_custom_message_box():
     yes_button.pack(side=LEFT, padx=10, pady=10)
     no_button = Button(button_frame, text="Record audio", command=lambda:rec(message_box))
     no_button.pack(side=LEFT, padx=10, pady=10)
+    no_button = Button(button_frame, text="Compare audio files", command=lambda:comp(message_box))
+    no_button.pack(side=LEFT, padx=10, pady=10)
     button_frame.pack()
     message_box.mainloop()
-
-def main():
-    show_custom_message_box()
 
 
 if __name__ == "__main__":
