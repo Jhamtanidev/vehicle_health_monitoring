@@ -89,8 +89,6 @@ def rec(old):
 
     # display the current health condition
     messagebox.showinfo("Vehicle Health Status","Current health condition: {}".format(health_condition))
-    messagebox.showinfo("Avg vol: {}".format(avg_volume))
-
     # close the audio stream and terminate PyAudio
     stream.stop_stream()
     stream.close()
@@ -102,7 +100,7 @@ def rec(old):
 
     # Plot the waveform
     plt.figure(figsize=(12, 4))
-    plt.plot(t, y, alpha=0.8)
+    plt.plot(t, audio_data, alpha=0.8)
     plt.xlabel('Time (s)')
     plt.ylabel('Amplitude')
     plt.title('Waveform')
