@@ -114,6 +114,8 @@ def prerec(old):
     file_path = filedialog.askopenfilename(filetypes=file_types)
     old.destroy()
     audio_data, samplerate = sf.read(file_path) 
+    print(audio_data)
+    print(samplerate)
 
      # convert the audio data to a numpy array
     audio_data = np.concatenate(audio_data)
