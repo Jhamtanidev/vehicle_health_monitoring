@@ -64,6 +64,7 @@ def rec(old):
 
     # calculate the average volume level
     avg_volume = np.abs(audio_data).mean()
+    print("Average volume: ", avg_volume)
 
     # define the value chart mapping sound levels to health conditions
     value_chart = {
@@ -75,38 +76,39 @@ def rec(old):
     }
 
     # map the sound level to a health condition using the value chart
-    if avg_volume < 500:
+    if avg_volume < 80:
         health_condition = value_chart[0]
-    elif avg_volume < 1000:
+    elif avg_volume < 100:
         health_condition = value_chart[1]
-    elif avg_volume < 2000:
+    elif avg_volume < 120:
         health_condition = value_chart[2]
-    elif avg_volume < 3000:
+    elif avg_volume < 150:
         health_condition = value_chart[3]
     else:
         health_condition = value_chart[4]
 
     # display the current health condition
     messagebox.showinfo("Vehicle Health Status","Current health condition: {}".format(health_condition))
+    messagebox.showinfo("Avg vol: {}".format(avg_volume))
 
     # close the audio stream and terminate PyAudio
     stream.stop_stream()
     stream.close()
     p.terminate()
-    # y, sr = librosa.load("bad.wav")
+    y, sr = librosa.load(audio_data)
 
-    # # Create a time axis in seconds
-    # t = librosa.times_like(y, sr=sr)
+    # Create a time axis in seconds
+    t = librosa.times_like(y, sr=sr)
 
-    # # Plot the waveform
-    # plt.figure(figsize=(12, 4))
-    # plt.plot(t, y, alpha=0.8)
-    # plt.xlabel('Time (s)')
-    # plt.ylabel('Amplitude')
-    # plt.title('Waveform')
-    # plt.grid(True)
-    # plt.tight_layout()
-    # plt.show()
+    # Plot the waveform
+    plt.figure(figsize=(12, 4))
+    plt.plot(t, y, alpha=0.8)
+    plt.xlabel('Time (s)')
+    plt.ylabel('Amplitude')
+    plt.title('Waveform')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
 
 def prerec(old):
     file_types = (("WAV files", "*.wav"), ("All files","*.*"))
@@ -119,6 +121,7 @@ def prerec(old):
 
     # calculate the average volume level
     avg_volume = np.abs(audio_data).mean()
+    print(avg_volume)
 
     # define the value chart mapping sound levels to health conditions
     value_chart = {
