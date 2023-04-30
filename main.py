@@ -17,6 +17,7 @@ def comp(old):
     file_path1 = filedialog.askopenfilename(filetypes=file_types)
     messagebox.showinfo("Open file","Please select the second audio file.")
     file_path2 = filedialog.askopenfilename(filetypes=file_types)
+    old.destroy()
 
     y, sr = librosa.load(file_path1)
     z, sr = librosa.load(file_path2)
@@ -28,13 +29,14 @@ def comp(old):
 
     # Plot the waveform
     plt.figure(figsize=(12, 4))
-    plt.plot(ty, y, alpha=0.8, color="red", label="File 1")
-    plt.plot(ty, zre, alpha=0.8, color="blue", label="File 2")
+    plt.plot(ty, y, alpha=0.8, color="red", label=file_path1.split("/")[-1])
+    plt.plot(ty, zre, alpha=0.8, color="blue", label=file_path2.split("/")[-1])
     plt.xlabel('Time (s)')
     plt.ylabel('Amplitude')
     plt.title('Waveform')
     plt.grid(True)
     plt.tight_layout()
+    plt.legend()
     plt.show()
 
 def rec(old):
@@ -85,7 +87,7 @@ def rec(old):
         health_condition = value_chart[4]
 
     # display the current health condition
-    print('Current health condition: ', health_condition)
+    messagebox.showinfo("Vehicle Health Status","Current health condition: {}".format(health_condition))
 
     # close the audio stream and terminate PyAudio
     stream.stop_stream()
@@ -120,7 +122,7 @@ def prerec(old):
 
     # define the value chart mapping sound levels to health conditions
     value_chart = {
-        0: 'Healthy',
+        0: 'Healthy, no repairs needed.',
         1: 'Slight issue',
         2: 'Moderate issue',
         3: 'Serious issue',
@@ -140,7 +142,7 @@ def prerec(old):
         health_condition = value_chart[4]
 
     # display the current health condition
-    print('Current health condition:', health_condition)
+    messagebox.showinfo("Vehicle Health Status","Current health condition: {}".format(health_condition))
     y, sr = librosa.load(file_path)
 
     # Create a time axis in seconds
@@ -148,12 +150,13 @@ def prerec(old):
 
     # Plot the waveform
     plt.figure(figsize=(12, 4))
-    plt.plot(t, y, alpha=0.8)
+    plt.plot(t, y, alpha=0.8, label=file_path.split("/")[-1])
     plt.xlabel('Time (s)')
     plt.ylabel('Amplitude')
     plt.title('Waveform')
     plt.grid(True)
     plt.tight_layout()
+    plt.legend()
     plt.show()
 
 def main():
