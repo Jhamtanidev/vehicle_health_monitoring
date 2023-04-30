@@ -22,7 +22,7 @@ def rec(old):
 
     # record some audio data
     print('Recording...')
-    num_chunks = 10
+    num_chunks = 100
     audio_data = []
     for i in range(num_chunks):
         data = stream.read(chunk_size)
