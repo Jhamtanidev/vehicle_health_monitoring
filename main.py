@@ -120,7 +120,6 @@ def prerec(old):
 
     # calculate the average volume level
     avg_volume = np.abs(audio_data).mean()
-    print(avg_volume)
 
     # define the value chart mapping sound levels to health conditions
     value_chart = {
@@ -133,13 +132,13 @@ def prerec(old):
     }
 
     # map the sound level to a health condition using the value chart
-    if avg_volume < 500:
+    if avg_volume < 0.05:
         health_condition = value_chart[0]
-    elif avg_volume < 1000:
+    elif avg_volume < 0.1:
         health_condition = value_chart[1]
-    elif avg_volume < 2000:
+    elif avg_volume < 0.2:
         health_condition = value_chart[2]
-    elif avg_volume < 3000:
+    elif avg_volume < 0.3:
         health_condition = value_chart[3]
     else:
         health_condition = value_chart[4]
